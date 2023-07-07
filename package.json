@@ -5,6 +5,8 @@
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
+    "release": "rollout",
+    "test": "echo \"add tests\"",
     "watch": "nodemon --watch src -e tsx,ts,js -x \"npm run build:dev\"",
     "build:dev": "build src -d lib --no-types && yarn astroturf lib",
     "build:themes": "cp -R ./node_modules/jarle/themes ./lib",
@@ -16,6 +18,7 @@
   },
   "devDependencies": {
     "@4c/build": "^4.0.0",
+    "@4c/rollout": "^4.0.2",
     "@4c/tsconfig": "^0.4.1",
     "@babel/core": "^7.22.5",
     "@babel/preset-react": "^7.22.5",
@@ -31,7 +34,6 @@
     "nodemon": "^2.0.22",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rollout": "^0.1.0",
     "typescript": "^5.1.6"
   },
   "prettier": {
