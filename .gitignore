@@ -1,0 +1,63 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+/lib
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yalc
+
+# npm package lock
+package-lock.json
+yalc.lock
+
+# testing
+.eslintcache
+/coverage
+.nyc_output/
+
+# production
+/build
+/docs
+stats.html
+
+# environment configuration
+.env.local
+.env.*.local
+!.config/env_defaults/.env.local
+!.config/env_defaults/.env.*.local
+.ssl/*
+
+# devenv files
+.DS_Store
+.idea
+.vscode
+
+# should be generated in CI
+.npmrc
+
+/.vite
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+vite.config.mts.timestamp-*
+
+# firebase
+firebase-debug.log*
+ui-debug.log*
+
+# vscode settings
+.vscode/settings.json
+
+# msw
+mockServiceWorker.js
+
+# playwright
+/playwright-report/
+/playwright/.cache/
+test-results/
+
+# ignore tool versions
+.tool-versions
+
+!playwright/hars/**/*.zip

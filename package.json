@@ -1,0 +1,47 @@
+{
+  "name": "react-data-editor",
+  "description": "data object visualizer and editor with validation",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "scripts": {
+    "watch": "nodemon --watch src -e tsx,ts,js -x \"npm run build:dev\"",
+    "build:dev": "build src -d lib --no-types && yarn astroturf lib",
+    "build:themes": "cp -R ./node_modules/jarle/themes ./lib",
+    "build": "build src -d lib  && astroturf lib -c lib/styles.css && yarn build:themes"
+  },
+  "release": {
+    "conventionalCommits": true,
+    "publishDir": "lib"
+  },
+  "devDependencies": {
+    "@4c/build": "^4.0.0",
+    "@4c/tsconfig": "^0.4.1",
+    "@babel/core": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "astroturf": "^1.2.0",
+    "babel-plugin-transform-rename-import": "^2.3.0",
+    "babel-preset-env-modules": "^1.0.1",
+    "eslint": "^8.44.0",
+    "eslint-config-jason": "^8.2.2",
+    "jarle": "^2.1.1",
+    "nodemon": "^2.0.22",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollout": "^0.1.0",
+    "typescript": "^5.1.6"
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "dependencies": {
+    "@restart/hooks": "^0.4.9",
+    "polished": "^4.2.2",
+    "react-formal": "^2.7.0",
+    "uncontrollable": "^8.0.2",
+    "yup": "^1.2.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "presets": [
+    ["env-modules", { "modules": false, "targets": { "browsers": ">1%" } }],
+    ["@babel/react", { "runtime": "automatic" }],
+    "@babel/typescript"
+  ],
+  "plugins": [
+    [
+      "transform-rename-import",
+      { "original": "^jarle\\/themes\\/(.+?)$", "replacement": "./themes/$1" }
+    ]
+  ]
+}

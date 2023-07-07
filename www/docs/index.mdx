@@ -1,0 +1,35 @@
+---
+id: docs
+title: Schema Editor
+slug: /
+---
+
+Write code and see the result as you type.
+
+## Overview
+
+```jsx live
+import DataEditor from '@lib';
+import { object, array, boolean, string, number, date } from 'yup';
+
+const schema = object({
+  age: number().required(),
+  dob: date(),
+  isCool: boolean(),
+  name: object({
+    first: string(),
+    last: string(),
+  }),
+  siblings: array(
+    object({
+      name: string(),
+      age: number(),
+    })
+  ),
+});
+
+<DataEditor schema={schema} />;
+```
+
+JARLE only looks at the last thing you return, so write whatever you need in front
+of it.
