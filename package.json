@@ -8,6 +8,7 @@
     "release": "rollout",
     "test": "echo \"add tests\"",
     "watch": "nodemon --watch src -e tsx,ts,js -x \"npm run build:dev\"",
+    "prepublishOnly": "npm run build",
     "build:dev": "build src -d lib --no-types && yarn astroturf lib",
     "build:themes": "cp -R ./node_modules/jarle/themes ./lib",
     "build": "build src -d lib  && astroturf lib -c lib/styles.css && yarn build:themes"

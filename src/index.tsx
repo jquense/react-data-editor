@@ -75,7 +75,7 @@ export type InputSchemaDescription =
 
 export interface DataEditorProps<TSchema extends AnyObjectSchema> {
   schema: TSchema;
-  data: InferType<TSchema>;
+  data?: InferType<TSchema>;
   defaultData?: InferType<TSchema>;
   theme?: PrismTheme;
   renderInput?: (props: RenderInputOptions) => ReactNode;
@@ -179,7 +179,7 @@ export default function DataEditor<TSchema extends AnyObjectSchema>({
   );
 }
 
-type RenderInputOptions = {
+export type RenderInputOptions = {
   props: UseFieldProps;
   meta: FieldMeta;
   colorScheme: 'light' | 'dark';
