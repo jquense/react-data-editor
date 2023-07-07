@@ -1,3 +1,14 @@
+# [1.2.0](https://github.com-oss/jquense/react-data-editor/compare/v1.1.0...v1.2.0) (2023-07-07)
+
+
+### Features
+
+* additional rendering options ([b55b320](https://github.com-oss/jquense/react-data-editor/commit/b55b32071ef58a1c028fc31a6428faf1f6eedc95))
+
+
+
+
+
 # [1.1.0](https://github.com-oss/jquense/react-data-editor/compare/v1.0.2...v1.1.0) (2023-07-07)
 
 
