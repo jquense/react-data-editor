@@ -12,6 +12,7 @@ import {
   printValue,
 } from 'yup';
 import useMediaQuery from '@restart/hooks/useMediaQuery';
+import useFocusManager from '@restart/hooks/useFocusManager';
 import Form, {
   FieldMeta,
   UseFieldProps,
@@ -28,6 +29,7 @@ import {
   useCallback,
   useContext,
   useMemo,
+  useState,
 } from 'react';
 import vsCodeDark from 'jarle/themes/vsDark';
 import vsCodeLight from 'jarle/themes/vsLight';
@@ -79,6 +81,7 @@ export interface DataEditorProps<TSchema extends AnyObjectSchema>
   data?: InferType<TSchema>;
   defaultData?: InferType<TSchema>;
   theme?: PrismTheme;
+  alwaysEditable?: boolean;
   renderInput?: (props: RenderInputOptions) => ReactNode;
   onChange?: (data: InferType<TSchema>) => void;
 }
@@ -90,8 +93,10 @@ type GetPropsForToken = (...tokens: string[]) => {
   style: PrismThemeEntry;
 };
 
-const ThemeContext = createContext<{
+const DateEditorContext = createContext<{
   theme: PrismTheme;
+
+  alwaysEditable: boolean;
   colorScheme: 'light' | 'dark';
   renderInput: (props: RenderInputOptions) => ReactNode;
   getPropsForToken: GetPropsForToken;
@@ -101,6 +106,7 @@ export default function DataEditor<TSchema extends AnyObjectSchema>({
   schema,
   data,
   defaultData,
+  alwaysEditable = false,
   renderInput = defaultRenderInput,
   theme: propsTheme,
   onChange,
@@ -161,10 +167,16 @@ export default function DataEditor<TSchema extends AnyObjectSchema>({
       : 'dark';
 
   return (
-    <ThemeContext.Provider
+    <DateEditorContext.Provider
       value={useMemo(
-        () => ({ theme, colorScheme, renderInput, getPropsForToken }),
-        [theme, colorScheme, renderInput, getPropsForToken]
+        () => ({
+          theme,
+          alwaysEditable,
+          colorScheme,
+          renderInput,
+          getPropsForToken,
+        }),
+        [theme, alwaysEditable, colorScheme, renderInput, getPropsForToken]
       )}
     >
       <pre style={{ colorScheme, ...theme.plain }} {...props}>
@@ -177,7 +189,7 @@ export default function DataEditor<TSchema extends AnyObjectSchema>({
           {renderSchemaDescription(schemaDescription, '')}
         </Form>
       </pre>
-    </ThemeContext.Provider>
+    </DateEditorContext.Provider>
   );
 }
 
@@ -187,6 +199,7 @@ export type RenderInputOptions = {
   colorScheme: 'light' | 'dark';
   theme: PrismTheme;
   formattedValue: string;
+  getPropsForToken: GetPropsForToken;
   schemaDescription: InputSchemaDescription | null;
   token: {
     className: string;
@@ -196,11 +209,13 @@ export type RenderInputOptions = {
 
 function defaultRenderInput({
   formattedValue,
+  getPropsForToken,
   props,
   token,
   theme,
   meta,
 }: RenderInputOptions) {
+  const placeholderStyle = getPropsForToken('null', 'keyword');
   const width =
     meta.nativeType === 'text' || meta.nativeType === 'number'
       ? `max(50px, ${(!meta.value == null ? '' : formattedValue).length + 5}ch)`
@@ -209,6 +224,7 @@ function defaultRenderInput({
   return (
     <input
       {...props}
+      placeholder={meta.value == null ? String(meta.value) : undefined}
       css={css`
         &:not([type='radio'], [type='checkbox']) {
           color: ${token.style.color ?? 'inherit'};
@@ -221,6 +237,12 @@ function defaultRenderInput({
           height: auto;
           background-color: ${theme.plain.backgroundColor};
           width: ${width};
+        }
+
+        &::placeholder {
+          font-style: ${placeholderStyle.style.fontStyle};
+          font-weight: ${placeholderStyle.style.fontWeight};
+          color: ${placeholderStyle.style.color};
         }
       `}
     />
@@ -396,7 +418,7 @@ function ArrayValue({
 }
 
 function Error({ for: forProp }: { for: string }) {
-  const { getPropsForToken } = useContext(ThemeContext);
+  const { getPropsForToken } = useContext(DateEditorContext);
 
   return (
     <Form.Message
@@ -417,7 +439,7 @@ function Token({
   token: string;
   children: React.ReactNode;
 }) {
-  const { getPropsForToken } = useContext(ThemeContext);
+  const { getPropsForToken } = useContext(DateEditorContext);
   return <span {...getPropsForToken(token)}>{children}</span>;
 }
 
@@ -434,10 +456,11 @@ function FieldValue({
   description: SchemaFieldDescription | null;
   name: string;
 }) {
-  const { theme, colorScheme, renderInput, getPropsForToken } =
-    useContext(ThemeContext);
+  const { theme, alwaysEditable, colorScheme, renderInput, getPropsForToken } =
+    useContext(DateEditorContext);
   const [fieldProps, meta] = useField(name);
 
+  const [focused, setFocused] = useState(alwaysEditable);
   const tokens =
     meta.value == null
       ? meta.value === undefined
@@ -450,11 +473,18 @@ function FieldValue({
     ...(schemaTypeToToken[description?.type!] ?? ['string'])
   );
 
+  let focusEvents = useFocusManager({
+    isDisabled: () => false,
+    onChange: alwaysEditable ? undefined : setFocused,
+  });
+
   return (
     <span
+      {...focusEvents}
       css={css`
         position: relative;
         display: inline-grid;
+        align-items: center;
         grid-template: 1fr / 1fr;
       `}
     >
@@ -463,9 +493,10 @@ function FieldValue({
           grid-area: 1 / 1;
           opacity: 0;
 
-          &:focus-within {
+          ${focused &&
+          css`
             opacity: 1;
-          }
+          `}
         `}
       >
         {renderInput({
@@ -473,6 +504,7 @@ function FieldValue({
           colorScheme,
           theme,
           meta,
+          getPropsForToken,
           schemaDescription: description as InputSchemaDescription,
           props: fieldProps,
           token: inputProps,
@@ -485,9 +517,10 @@ function FieldValue({
           pointer-events: none;
           opacity: 1;
 
-          *:focus-within + & {
+          ${focused &&
+          css`
             opacity: 0;
-          }
+          `}
         `}
       >
         {formattedValue}
@@ -497,7 +530,7 @@ function FieldValue({
 }
 
 function Button(props: ComponentPropsWithoutRef<'button'>) {
-  const { theme, colorScheme } = useContext(ThemeContext);
+  const { theme } = useContext(DateEditorContext);
   const contrastColor = readableColor(theme.plain.backgroundColor ?? 'white');
 
   return (
