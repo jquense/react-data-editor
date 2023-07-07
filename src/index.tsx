@@ -73,7 +73,8 @@ export type InputSchemaDescription =
   | SchemaLazyDescription
   | SchemaRefDescription;
 
-export interface DataEditorProps<TSchema extends AnyObjectSchema> {
+export interface DataEditorProps<TSchema extends AnyObjectSchema>
+  extends React.HTMLAttributes<HTMLPreElement> {
   schema: TSchema;
   data?: InferType<TSchema>;
   defaultData?: InferType<TSchema>;
@@ -103,6 +104,7 @@ export default function DataEditor<TSchema extends AnyObjectSchema>({
   renderInput = defaultRenderInput,
   theme: propsTheme,
   onChange,
+  ...props
 }: DataEditorProps<TSchema>) {
   const [formValue, handleChange] = useUncontrolledProp(
     data,
@@ -165,7 +167,7 @@ export default function DataEditor<TSchema extends AnyObjectSchema>({
         [theme, colorScheme, renderInput, getPropsForToken]
       )}
     >
-      <pre style={{ fontSize: '95%', colorScheme, ...theme.plain }}>
+      <pre style={{ colorScheme, ...theme.plain }} {...props}>
         <Form
           as={null}
           schema={schema}
@@ -204,21 +206,14 @@ function defaultRenderInput({
       ? `max(50px, ${(!meta.value == null ? '' : formattedValue).length + 5}ch)`
       : 'auto';
 
-  // if (meta.nativeType === 'radio' || meta.nativeType === 'checkbox') {
-  //   <input {...props} css={cs} />;
-  // }
-
   return (
     <input
       {...props}
       css={css`
-        grid-area: 1 / 1;
-
         &:not([type='radio'], [type='checkbox']) {
           color: ${token.style.color ?? 'inherit'};
           appearance: none;
           font-size: 100%;
-
           font-family: inherit;
           line-height: inherit;
           padding: 0;

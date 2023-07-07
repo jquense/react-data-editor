@@ -26,7 +26,6 @@
     "@babel/preset-typescript": "^7.22.5",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
-    "astroturf": "^1.2.0",
     "babel-plugin-transform-rename-import": "^2.3.0",
     "babel-preset-env-modules": "^1.0.1",
     "eslint": "^8.44.0",
@@ -41,6 +40,7 @@
     "singleQuote": true
   },
   "dependencies": {
+    "astroturf": "^1.2.0",
     "@restart/hooks": "^0.4.9",
     "polished": "^4.2.2",
     "react-formal": "^2.7.0",
