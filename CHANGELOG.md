@@ -1,3 +1,14 @@
+# [1.1.0](https://github.com-oss/jquense/react-data-editor/compare/v1.0.2...v1.1.0) (2023-07-07)
+
+
+### Features
+
+* spread throguh props ([ffd91c0](https://github.com-oss/jquense/react-data-editor/commit/ffd91c07d2f2edd407173a721ad8017be2d1c84e))
+
+
+
+
+
 ## [1.0.2](https://github.com-oss/jquense/react-data-editor/compare/v1.0.1...v1.0.2) (2023-07-07)
 
 
