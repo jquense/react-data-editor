@@ -1,3 +1,14 @@
+## [1.2.1](https://github.com-oss/jquense/react-data-editor/compare/v1.2.0...v1.2.1) (2023-07-11)
+
+
+### Bug Fixes
+
+* array issue ([131f0ef](https://github.com-oss/jquense/react-data-editor/commit/131f0efe4fe3acd12115c6cb54786dd7e4ce7421))
+
+
+
+
+
 # [1.2.0](https://github.com-oss/jquense/react-data-editor/compare/v1.1.0...v1.2.0) (2023-07-07)
 
 
