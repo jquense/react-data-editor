@@ -4709,10 +4709,10 @@ react-dom@^18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
-react-formal@^2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/react-formal/-/react-formal-2.7.0.tgz#ed5a71615652b761492dd869e00ffc7865a31bf2"
-  integrity sha512-yopzgrMeiEOdJLxSqafCHmfol3+03hkIMorRcnciUfMneRW7RanUnP21L2dMaYT5+Gqchu2sD+Y371nzAJKW5A==
+react-formal@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/react-formal/-/react-formal-2.7.1.tgz#2a8e70f2e4f2c50ecbdd67134701ca96f13b0d2b"
+  integrity sha512-D+SGCW/OAeX80FyLngqMXInV1U+uqhu6uyy7ePV5pVuYuH8eC8S2KffahmAR7LnJfDwBrQ/5x4xdnbs7YB++LQ==
   dependencies:
     "@restart/hooks" "^0.4.1"
     "@types/lodash" "^4.14.177"

@@ -40,10 +40,10 @@
     "singleQuote": true
   },
   "dependencies": {
-    "astroturf": "^1.2.0",
     "@restart/hooks": "^0.4.9",
+    "astroturf": "^1.2.0",
     "polished": "^4.2.2",
-    "react-formal": "^2.7.0",
+    "react-formal": "^2.7.1",
     "uncontrollable": "^8.0.2",
     "yup": "^1.2.0"
   }
